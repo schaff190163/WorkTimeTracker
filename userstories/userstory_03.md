@@ -1,23 +1,31 @@
-# Userstory Lookup Worktimes
+# userstory_03
 
-User wants to Look how much time they have worked in a certain time
+
+# Title
+
+Look at Workhours
+
 
 ## Actors
 
 user
 
+
+## Description
+
+User clicks the "show workhours" button
+
+
 ## Input
 
--
+Show Workhours Button Clicked
+
 
 ## Internal State change
 
-Values of different days are added together
+Workhours are calculated and displayed on the GUI
+
 
 ## Output
 
-Summed up working time of the selected timeframe
-
-## Errors
-
-Summed up times of a wrong intervall
+Workhours are displayed

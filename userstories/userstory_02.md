@@ -1,24 +1,31 @@
-# Userstory Stop Timer
+# userstory_02
 
-Stop Timer
+
+# Title
+
+Check Out
+
 
 ## Actors
 
 user
 
+
+## Description
+
+User clicks Check Out Button
+
+
 ## Input
 
-Stop Timer Button clicked
+Check Out Button Clicked
+
 
 ## Internal State change
 
-timer stops counting
-value is transfered to storage
+Timer stops counting and saves value
+
 
 ## Output
 
-timer starts counting
-
-## Errors
-
-error writing into storage
+--

@@ -1,21 +1,31 @@
-# Userstory Start Timer
+# userstory_01
 
-Start Timer
+
+# Title
+
+Check In
+
 
 ## Actors
 
 user
 
+
+## Description
+
+User clicks Check In Button
+
+
 ## Input
 
-Start Timer Button clicked
+Check In Button clicked
+
 
 ## Internal State change
 
-timer starts counting
+Timer starts counting
+
 
 ## Output
 
-timer starts counting
-
-## Errors
+--
