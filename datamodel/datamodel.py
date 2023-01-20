@@ -6,15 +6,15 @@ Base = declarative_base()
 
 
 class Users(Base):
-    tablename = "users"
+    __tablename__ = "users"
 
     userID = Column(Integer, primary_key=True)
     userName = Column(String)
 
 
 class Times(Base):
-    tablename = "uimes"
+    __tablename__ = "times"
 
     timeID = Column(Integer, primary_key=True)
-    timeValue = Column(int)
+    timeValue = Column(Integer)
     userID = Column(DateTime, ForeignKey("users.userID"))
