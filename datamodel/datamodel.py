@@ -16,5 +16,5 @@ class Times(Base):
     __tablename__ = "times"
 
     timeID = Column(Integer, primary_key=True)
-    timeValue = Column(Integer)
-    userID = Column(DateTime, ForeignKey("users.userID"))
+    timeValue = Column(DateTime)
+    userID = Column(Integer, ForeignKey("users.userID"))
