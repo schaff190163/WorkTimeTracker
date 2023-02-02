@@ -1,11 +1,15 @@
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
-from sqlalchemy.orm import declarative_base
+"""Datamodel Module."""
 
+
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
+from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
 
 
 class Users(Base):
+    """Users Table."""
+
     __tablename__ = "users"
 
     userID = Column(Integer, primary_key=True)
@@ -13,6 +17,8 @@ class Users(Base):
 
 
 class Times(Base):
+    """Times Table."""
+
     __tablename__ = "times"
 
     timeID = Column(Integer, primary_key=True)

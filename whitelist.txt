@@ -1,0 +1,17 @@
+tkinter
+tk
+Tk
+scrollbar
+Scrollbar
+listbox
+Listbox
+yscrollcommand
+yview
+listbox
+pady
+padx
+mainloop
+sqlalchemy
+datamodel
+tablename
+orm
