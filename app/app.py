@@ -1,39 +1,35 @@
-"""GUI Implementation."""
-
-
 import tkinter as tk
+
+
+class UserSelect(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+        self.master = master
+        self.init_ui()
+
+    def init_ui(self):
+        self.button = tk.Button(self, text="Go to Page 2", command=self.go_to_options)
+        self.button.pack()
+
+    def go_to_options(self):
+        self.pack_forget()
+        Options(self.master)
+
+
+class Options(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+        self.master = master
+        self.init_ui()
+
+    def init_ui(self):
+        self.button1 = tk.Button(self, text="Button 1")
+        self.button1.pack(fill=tk.BOTH, expand=True)
+        self.button2 = tk.Button(self, text="Button 2")
+        self.button2.pack(fill=tk.BOTH, expand=True)
+
 
 root = tk.Tk()
 root.geometry("700x500")
-
-# Create a frame to hold the buttons
-frame = tk.Frame(root)
-frame.pack()
-
-# Create a scrollbar and associate it with the frame
-scrollbar = tk.Scrollbar(frame)
-scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-
-# Create a listbox to hold the buttons
-listbox = tk.Listbox(frame, yscrollcommand=scrollbar.set)
-listbox.pack(side=tk.LEFT, fill=tk.BOTH)
-
-# Add buttons to the listbox
-for i in range(20):
-    listbox.insert(tk.END, f'Button {i}')
-
-# Configure the scrollbar to scroll the listbox
-scrollbar.config(command=listbox.yview)
-
-# center the list of buttons
-listbox.pack(expand=True, fill=tk.BOTH)
-
-# Create the "Add" button
-add_button = tk.Button(root, text="Add")
-add_button.grid(row=0, column=1, sticky="n")
-
-# Create the "Remove" button
-remove_button = tk.Button(root, text="Remove")
-remove_button.pack(side=tk.RIGHT, padx=5, pady=5)
-
+UserSelect(root).pack()
 root.mainloop()

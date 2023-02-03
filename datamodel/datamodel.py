@@ -22,5 +22,6 @@ class Times(Base):
     __tablename__ = "times"
 
     timeID = Column(Integer, primary_key=True)
-    timeValue = Column(DateTime)
+    startValue = Column(DateTime, nullable=False)
+    stopValue = Column(DateTime)
     userID = Column(Integer, ForeignKey("users.userID"))
