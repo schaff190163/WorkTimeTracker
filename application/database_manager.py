@@ -1,7 +1,6 @@
 import datamodel
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-import datetime
 
 
 engine = create_engine('sqlite:///C:\\Users\\Simon\\OneDrive\\Dokumente\\4AHIT\\SEW INSY\\WorkTimeTracker\\datamodel\\app_db.sql')
@@ -52,6 +51,13 @@ class Database_Manager:
         session.delete(time)
         session.commit()
 
+    def get_all_users(session):
+        all_users = session.query(datamodel.Users).all()
+        return all_users
+
 
 if __name__ == "__main__":
     dm = Database_Manager()
+    all_users = dm.get_all_users(session)
+    users_list = [user.userName for user in all_users]
+    print(users_list)
