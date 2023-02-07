@@ -1,11 +1,17 @@
 """Initpy."""
 
 
-from .database_manager import Manager
+from .database_manager import Database_Manager
 from .datamodel import Users, Times
+from .app import tkinterApp, UserSelect, Options, Actions, Statistics
 
 __exports__ = [
-    Manager,
+    Database_Manager,
     Users,
-    Times
+    Times,
+    tkinterApp,
+    UserSelect,
+    Options,
+    Actions,
+    Statistics
 ]

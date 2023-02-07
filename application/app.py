@@ -1,5 +1,14 @@
 import tkinter as tk
 from tkinter import ttk
+from database_manager import Database_Manager
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+import datetime
+
+engine = create_engine('sqlite:///C:\\Users\\Simon\\OneDrive\\Dokumente\\4AHIT\\SEW INSY\\WorkTimeTracker\\application\\app_db.sql')
+Session = sessionmaker(bind=engine)
+session = Session()
+now = datetime.datetime.now()
 
 
 class tkinterApp(tk.Tk):
@@ -41,14 +50,15 @@ class UserSelect(tk.Frame):
 
         mainlabel = ttk.Label(self, text="Select User", font=(
                               'Helvetica bold', 15))
-        mainlabel.grid(row=0, column=1, padx=(0, 0), pady=(10, 0))
+        mainlabel.grid(row=0, column=0, padx=(0, 0), pady=(10, 0))
 
-        button_names = ['Simon', 'John', 'Jane', 'Alex']
-        for i, button_name in enumerate(button_names):
-            button = ttk.Button(self, text="User " + str(i+1), width=20,
+        all_users = Database_Manager.get_all_users(session)
+        users_list = [user.userName for user in all_users]
+        for i, button_name in enumerate(users_list):
+            button = ttk.Button(self, text=button_name, width=20,
                                 command=lambda:
                                 controller.show_frame(Options))
-            button.grid(row=i+1, column=100, padx=(0, 100), pady=(10, 10))
+            button.grid(row=i+1, column=1, padx=(0, 100), pady=(10, 10))
 
 
 class Options(tk.Frame):
@@ -57,14 +67,19 @@ class Options(tk.Frame):
         self.config(bg='green')
         self.config(width=700, height=450)
 
-        mainlabel = ttk.Label(self, text="What do you want to do?", font=(
-                              'Helvetica bold', 15))
+        actions_button = ttk.Button(self, text="Actions",
+                                    command=lambda:
+                                    controller.show_frame(Actions))
+        stats_button = ttk.Button(self, text="Statistics",
+                                  command=lambda:
+                                  controller.show_frame(Statistics))
         back_button = ttk.Button(self, text="Back",
                                  command=lambda:
                                  controller.show_frame(UserSelect))
 
-        mainlabel.grid(row=0, column=1, padx=(0, 0), pady=(80, 10))
-        back_button.grid(row=5, column=1, padx=(100, 100), pady=(10, 80))
+        actions_button.grid(row=1, column=0, padx=(100, 100), pady=(10, 70))
+        stats_button.grid(row=1, column=2, padx=(100, 100), pady=(10, 70))
+        back_button.grid(row=0, column=0, padx=(100, 100), pady=(5, 100))
 
 
 class Actions(tk.Frame):
@@ -73,14 +88,15 @@ class Actions(tk.Frame):
         self.config(bg='yellow')
         self.config(width=700, height=450)
 
-        mainlabel = ttk.Label(self, text="Are you entering or leaving?", font=(
-                              'Helvetica bold', 15))
+        coming_button = ttk.Button(self, text="Coming", command=Database_Manager.create_time(session, user_id=Database_Manager.get_last_time_id(session=session), start_value=now, stop_value=None))
+        leaving_button = ttk.Button(self, text="Leaving", command=Database_Manager.update_time())
         back_button = ttk.Button(self, text="Back",
                                  command=lambda:
                                  controller.show_frame(Options))
 
-        mainlabel.grid(row=0, column=1, padx=(0, 0), pady=(80, 10))
-        back_button.grid(row=1, column=1, padx=(100, 100), pady=(10, 80))
+        coming_button.grid(row=1, column=0, padx=(100, 100), pady=(10, 80))
+        leaving_button.grid(row=1, column=2, padx=(100, 100), pady=(10, 80))
+        back_button.grid(row=0, column=0, padx=(100, 100), pady=(10, 80))
 
 
 class Statistics(tk.Frame):
