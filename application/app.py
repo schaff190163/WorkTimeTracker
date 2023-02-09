@@ -88,8 +88,12 @@ class Actions(tk.Frame):
         self.config(bg='yellow')
         self.config(width=700, height=450)
 
-        coming_button = ttk.Button(self, text="Coming", command=Database_Manager.create_time(session, user_id=Database_Manager.get_last_time_id(session=session), start_value=now, stop_value=None))
-        leaving_button = ttk.Button(self, text="Leaving", command=Database_Manager.update_time())
+        coming_button = ttk.Button(self, text="Coming",
+                                   command=lambda: Database_Manager.create_time
+                                   (session, user_id=1, start_value=now, stop_value=None))
+        leaving_button = ttk.Button(self, text="Leaving",
+                                    command=lambda: Database_Manager.update_time
+                                    (session, time_id=1, user_id=1, start_value=now, stop_value=now))
         back_button = ttk.Button(self, text="Back",
                                  command=lambda:
                                  controller.show_frame(Options))
