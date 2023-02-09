@@ -46,7 +46,6 @@ class UserSelect(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.config(bg='red')
-        self.config(width=700, height=450)
 
         mainlabel = ttk.Label(self, text="Select User", font=(
                               'Helvetica bold', 15))
@@ -65,7 +64,6 @@ class Options(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.config(bg='green')
-        self.config(width=700, height=450)
 
         actions_button = ttk.Button(self, text="Actions",
                                     command=lambda:
@@ -86,7 +84,6 @@ class Actions(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.config(bg='yellow')
-        self.config(width=700, height=450)
 
         coming_button = ttk.Button(self, text="Coming",
                                    command=lambda: Database_Manager.create_time
@@ -107,12 +104,27 @@ class Statistics(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.config(bg='blue')
-        self.config(width=700, height=450)
 
         mainlabel = ttk.Label(self, text="Statistics", font=(
                               'Helvetica bold', 15))
+        yearlabel = ttk.Label(self, text="This Year:")
+        monthlabel = ttk.Label(self, text="This Month:")
+        weeklabel = ttk.Label(self, text="This Week:")
+        yearval = ttk.Label(self, text="%.1f h" % Database_Manager.get_sum_of_year(session, user_id=1))
+        monthval = ttk.Label(self, text="%.1f h" % Database_Manager.get_sum_of_month(session, user_id=1))
+        weekval = ttk.Label(self, text="%.1f h" % Database_Manager.get_sum_of_week(session, user_id=1))
+        back_button = ttk.Button(self, text="Back",
+                                 command=lambda:
+                                 controller.show_frame(Options))
 
-        mainlabel.grid(row=0, column=1, padx=(0, 0), pady=(80, 10))
+        mainlabel.grid(row=0, column=1, padx=(0, 0), pady=(10, 20))
+        yearlabel.grid(row=1, column=0, padx=(0, 0), pady=(10, 10))
+        monthlabel.grid(row=2, column=0, padx=(0, 0), pady=(10, 10))
+        weeklabel.grid(row=3, column=0, padx=(0, 0), pady=(10, 10))
+        yearval.grid(row=1, column=2, padx=(0, 0), pady=(10, 10))
+        monthval.grid(row=2, column=2, padx=(0, 0), pady=(10, 10))
+        weekval.grid(row=3, column=2, padx=(0, 0), pady=(10, 10))
+        back_button.grid(row=0, column=0, padx=(100, 100), pady=(20, 10))
 
 
 app = tkinterApp()
