@@ -51,7 +51,7 @@ class Database_Manager:
         session.delete(time)
         session.commit()
 
-    def get_all_users(self, session):
+    def get_all_users(session):
         all_users = session.query(datamodel.Users).all()
         return all_users
 

@@ -52,8 +52,8 @@ class UserSelect(tk.Frame):
                               'Helvetica bold', 15))
         mainlabel.grid(row=0, column=0, padx=(0, 0), pady=(10, 0))
 
-        all_users = Database_Manager.get_all_users(session)
-        users_list = [user.userName for user in all_users]
+        users = Database_Manager.get_all_users(session)
+        users_list = [user.userName for user in users]
         for i, button_name in enumerate(users_list):
             button = ttk.Button(self, text=button_name, width=20,
                                 command=lambda:
