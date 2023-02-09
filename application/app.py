@@ -93,7 +93,7 @@ class Actions(tk.Frame):
                                    (session, user_id=1, start_value=now, stop_value=None))
         leaving_button = ttk.Button(self, text="Leaving",
                                     command=lambda: Database_Manager.update_time
-                                    (session, time_id=1, user_id=1, start_value=now, stop_value=now))
+                                    (session, time_id=Database_Manager.get_last_time_id(session), user_id=1, start_value=now, stop_value=now))
         back_button = ttk.Button(self, text="Back",
                                  command=lambda:
                                  controller.show_frame(Options))
