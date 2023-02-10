@@ -71,8 +71,9 @@ class UserSelect(tk.Frame):
         return lambda: UserSelect.setID(user_id, controller)
 
     def setID(user_id, controller):
-        controller.show_frame(Options)
         tkinterApp.setUserID(user_id)
+
+        controller.show_frame(Options)
         print(user_id)
 
 
@@ -115,20 +116,21 @@ class Actions(tk.Frame):
                                     ], width=20)
         leaving_button = ttk.Button(self, text="Leaving",
                                     command=lambda: [
-                                    Database_Manager.update_time(session, time_id=Database_Manager.get_last_time_id(session), user_id=tkinterApp.getUserID(), start_value=now, stop_value=now),
+                                    Database_Manager.update_time(session, user_id=tkinterApp.getUserID(), stop_value=now),
                                     controller.show_frame(Options)
                                     ], width=20)
         back_button = ttk.Button(self, text="Back",
                                  command=lambda:
                                  controller.show_frame(Options))
 
-        mainlabel.grid(row=0, column=2, padx=(10, 10), pady=(10, 50))
+        mainlabel.grid(row=0, column=1, padx=(10, 10), pady=(10, 50))
         coming_button.grid(row=1, column=0, padx=(75, 75), pady=(25, 85))
         leaving_button.grid(row=1, column=2, padx=(75, 75), pady=(25, 85))
         back_button.grid(row=0, column=0, padx=(10, 50), pady=(10, 50))
 
 
 class Statistics(tk.Frame):
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, width=700, height=450)
 
@@ -140,6 +142,7 @@ class Statistics(tk.Frame):
         yearlabel = ttk.Label(self, text="This Year:")
         monthlabel = ttk.Label(self, text="This Month:")
         weeklabel = ttk.Label(self, text="This Week:")
+
         yearval = ttk.Label(self, text="%.1f h" % Database_Manager.get_sum_of_year(session, user_id=tkinterApp.getUserID()))
         monthval = ttk.Label(self, text="%.1f h" % Database_Manager.get_sum_of_month(session, user_id=tkinterApp.getUserID()))
         weekval = ttk.Label(self, text="%.1f h" % Database_Manager.get_sum_of_week(session, user_id=tkinterApp.getUserID()))
