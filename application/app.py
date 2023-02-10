@@ -13,6 +13,8 @@ now = datetime.datetime.now()
 
 class tkinterApp(tk.Tk):
 
+    current_user_id = 0
+
     def __init__(self, *args, **kwargs):
 
         tk.Tk.__init__(self, *args, **kwargs)
@@ -40,6 +42,14 @@ class tkinterApp(tk.Tk):
         frame = self.frames[container]
         frame.tkraise()
 
+    @staticmethod
+    def getUserID():
+        return tkinterApp.current_user_id
+
+    @staticmethod
+    def setUserID(user_ID):
+        tkinterApp.current_user_id = user_ID
+
 
 class UserSelect(tk.Frame):
 
@@ -51,12 +61,19 @@ class UserSelect(tk.Frame):
         mainlabel.grid(row=0, column=0, padx=(0, 0), pady=(10, 10))
 
         users = Database_Manager.get_all_users(session)
-        users_list = [user.userName for user in users]
-        for i, button_name in enumerate(users_list):
-            button = ttk.Button(self, text=button_name, width=50,
-                                command=lambda:
-                                controller.show_frame(Options))
+        for i, user in enumerate(users):
+            button = ttk.Button(self, text=user.userName, width=50,
+                                command=UserSelect.generate_lambda(user.userID, controller))
+
             button.grid(row=i+1, column=0, padx=(150, 150), pady=(10, 10))
+
+    def generate_lambda(user_id, controller):
+        return lambda: UserSelect.setID(user_id, controller)
+
+    def setID(user_id, controller):
+        controller.show_frame(Options)
+        tkinterApp.setUserID(user_id)
+        print(user_id)
 
 
 class Options(tk.Frame):
@@ -86,17 +103,19 @@ class Options(tk.Frame):
 class Actions(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, width=700, height=450)
+        tk.IntVar()
 
+        self.selected_user = 0
         mainlabel = ttk.Label(self, text="Are you entering or leaving?", font=(
                               'Helvetica bold', 15))
         coming_button = ttk.Button(self, text="Entering",
                                    command=lambda: [
-                                    Database_Manager.create_time(session, user_id=1, start_value=now, stop_value=None),
+                                    Database_Manager.create_time(session, user_id=tkinterApp.getUserID(), start_value=now, stop_value=None),
                                     controller.show_frame(Options)
                                     ], width=20)
         leaving_button = ttk.Button(self, text="Leaving",
                                     command=lambda: [
-                                    Database_Manager.update_time(session, time_id=Database_Manager.get_last_time_id(session), user_id=1, start_value=now, stop_value=now),
+                                    Database_Manager.update_time(session, time_id=Database_Manager.get_last_time_id(session), user_id=tkinterApp.getUserID(), start_value=now, stop_value=now),
                                     controller.show_frame(Options)
                                     ], width=20)
         back_button = ttk.Button(self, text="Back",
@@ -108,18 +127,22 @@ class Actions(tk.Frame):
         leaving_button.grid(row=1, column=2, padx=(75, 75), pady=(25, 85))
         back_button.grid(row=0, column=0, padx=(10, 50), pady=(10, 50))
 
+
 class Statistics(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, width=700, height=450)
+
+        user_id = tkinterApp.getUserID()
+        print(user_id)
 
         mainlabel = ttk.Label(self, text="Statistics", font=(
                               'Helvetica bold', 15))
         yearlabel = ttk.Label(self, text="This Year:")
         monthlabel = ttk.Label(self, text="This Month:")
         weeklabel = ttk.Label(self, text="This Week:")
-        yearval = ttk.Label(self, text="%.1f h" % Database_Manager.get_sum_of_year(session, user_id=1))
-        monthval = ttk.Label(self, text="%.1f h" % Database_Manager.get_sum_of_month(session, user_id=1))
-        weekval = ttk.Label(self, text="%.1f h" % Database_Manager.get_sum_of_week(session, user_id=1))
+        yearval = ttk.Label(self, text="%.1f h" % Database_Manager.get_sum_of_year(session, user_id=tkinterApp.getUserID()))
+        monthval = ttk.Label(self, text="%.1f h" % Database_Manager.get_sum_of_month(session, user_id=tkinterApp.getUserID()))
+        weekval = ttk.Label(self, text="%.1f h" % Database_Manager.get_sum_of_week(session, user_id=tkinterApp.getUserID()))
         back_button = ttk.Button(self, text="Back",
                                  command=lambda:
                                  controller.show_frame(Options))
